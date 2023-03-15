@@ -76,6 +76,6 @@ jobs:
 
         json_data = r.json()['data']['user']['contributionsCollection']['pullRequestReviewContributionsByRepository']
 
-        reviews = sum([i['contributions']['totalCount'] for i in json_data][0])
+        reviews = sum([i['contributions']['totalCount'] for i in json_data])
 
         print(f'Number of reviews: {reviews}')
