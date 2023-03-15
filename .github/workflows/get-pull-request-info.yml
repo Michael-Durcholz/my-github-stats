@@ -71,6 +71,8 @@ jobs:
         headers = {'Authorization': 'token %s' % api_token}
 
         r = requests.post(url=url, json=json, headers=headers)
+        
+        print(f"json_data {r.json()}")
 
         json_data = r.json()['data']['user']['contributionsCollection']['pullRequestReviewContributionsByRepository']
 
