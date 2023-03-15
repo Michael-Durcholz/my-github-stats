@@ -37,6 +37,7 @@ jobs:
 
     # Generate all statistics images
     - name: Generate images
+      shell: python
       run: |
         import requests
 
