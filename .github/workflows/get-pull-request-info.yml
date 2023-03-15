@@ -1,0 +1,76 @@
+name: Generate Pull Request Info
+
+on:
+  push:
+    branches: [ main ]
+  schedule:
+    - cron: "5 0 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  
+env:
+  username: "Michael-Durcholz"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Check out repository under $GITHUB_WORKSPACE, so the job can access it
+    - uses: actions/checkout@v3
+
+    # Run using Python 3.8 for consistency and aiohttp
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.8'
+        architecture: 'x64'
+        cache: 'pip'
+
+    # Install dependencies with `pip`
+    - name: Install requirements
+      run: |
+        python3 -m pip install requests
+
+    # Generate all statistics images
+    - name: Generate images
+      run: |
+        import requests
+        import os
+
+        data = requests.get('https://api.github.com/search/issues?q=is:pr+org:ExxonMobil+author:${{env.username}}+is:merged').json()
+
+        print(f"Merged PRs: {data['total_count']}")
+
+        url = 'https://api.github.com/graphql'
+        query = (
+        """
+        {
+          user(login: "${{env.username}}") {
+            contributionsCollection {
+              pullRequestReviewContributionsByRepository {
+                contributions {
+                  totalCount
+                }
+                repository {
+                  name
+                }
+              }
+            }
+          }
+        }
+        """
+        )
+        json = { 'query' : query}
+        api_token = "${{ secrets.ACCESS_TOKEN }}"
+        headers = {'Authorization': 'token %s' % api_token}
+
+        r = requests.post(url=url, json=json, headers=headers)
+
+        json_data = r.json()['data']['user']['contributionsCollection']['pullRequestReviewContributionsByRepository']
+
+        reviews = [i['contributions']['totalCount'] for i in json_data if i['repository']['name'] == 'pandas'][0]
+
+        print(f'Number of reviews: {reviews}')
