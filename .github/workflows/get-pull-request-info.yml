@@ -70,6 +70,6 @@ jobs:
 
         json_data = r.json()['data']['user']['contributionsCollection']['pullRequestReviewContributionsByRepository']
 
-        reviews = sum([i['contributions']['totalCount'] for i in json_data if i['repository']['nameWithOwner'] == "${{env.repoOwnerConstraint}}"])
+        reviews = sum([i['contributions']['totalCount'] for i in json_data if i['repository']['nameWithOwner'].startswith("${{env.repoOwnerConstraint}}")])
 
         print(f'Number of reviews: {reviews}')
