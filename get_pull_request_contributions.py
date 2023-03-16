@@ -58,7 +58,7 @@ class PRStats(object):
         f"""
         {{
           user(login: {self.username}) {{
-            contributionsCollection(from: {self.startDateTime}, to: {self.endDateTime}) {{
+            contributionsCollection(from: {self.startDateTime.isoformat(sep='T', timespec='seconds')}, to: {self.endDateTime.isoformat(sep='T', timespec='seconds')}) {{
               pullRequestReviewContributionsByRepository(maxRepositories: {self.maxNumberOfRepos}) {{
                 contributions {{
                   totalCount
