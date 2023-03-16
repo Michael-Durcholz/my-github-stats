@@ -46,7 +46,7 @@ async def generate_overview(s: Stats, prStats: PRStats) -> None:
     output = re.sub("{{ views }}", f"{await s.views:,}", output)
     output = re.sub("{{ repos }}", f"{len(await s.repos):,}", output)
     
-    output = re.sub("{{ pr_contributions }}", f"{await prStats.pr_Contributions:,}", output)
+    output = re.sub("{{ pr_contributions }}", f"{await prStats.prContributions:,}", output)
 
     generate_output_folder()
     with open("generated/overview.svg", "w") as f:
