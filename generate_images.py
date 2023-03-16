@@ -29,7 +29,7 @@ def generate_output_folder() -> None:
 ################################################################################
 
 
-async def generate_overview(s: Stats) -> None:
+async def generate_overview(s: Stats, prStats: PRStats) -> None:
     """
     Generate an SVG badge with summary statistics
     :param s: Represents user's GitHub statistics
@@ -46,7 +46,7 @@ async def generate_overview(s: Stats) -> None:
     output = re.sub("{{ views }}", f"{await s.views:,}", output)
     output = re.sub("{{ repos }}", f"{len(await s.repos):,}", output)
     
-    output = re.sub("{{ pr_contributions }}", f"{len(await s.repos):,}", output)
+    output = re.sub("{{ pr_contributions }}", f"{await prStats.pr_Contributions:,}", output)
 
     generate_output_folder()
     with open("generated/overview.svg", "w") as f:
