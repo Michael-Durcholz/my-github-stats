@@ -1,10 +1,10 @@
 name: Generate Pull Request Info
 
 on:
-  push:
-    branches: [ main ]
-  schedule:
-    - cron: "5 0 * * *"
+  #push:
+  #  branches: [ main ]
+  #schedule:
+  #  - cron: "5 0 * * *"
   workflow_dispatch:
 
 permissions:
@@ -12,7 +12,6 @@ permissions:
   
 env:
   username: "Michael-Durcholz"
-  repoOwnerConstraint: "ExxonMobil"
 
 jobs:
   build:
