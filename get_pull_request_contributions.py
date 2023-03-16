@@ -16,8 +16,8 @@ class PRStats(object):
         access_token: str,
         session: aiohttp.ClientSession,
         repo_owner: str = None,
-        startDateTime: datetime = datetime.datetime.now() - timedelta(days = 365),
-        endDateTime: datetime = datetime.datetime.now(),
+        startDateTime: datetime = datetime.now() - timedelta(days = 365),
+        endDateTime: datetime = datetime.now(),
     ):
         self.username = username
         self.access_token = access_token
