@@ -5,8 +5,10 @@ import os
 import re
 
 import aiohttp
+import requests
 
 from github_stats import Stats
+from get_pull_request_contributions import PRStats
 
 
 ################################################################################
@@ -43,6 +45,8 @@ async def generate_overview(s: Stats) -> None:
     output = re.sub("{{ lines_changed }}", f"{changed:,}", output)
     output = re.sub("{{ views }}", f"{await s.views:,}", output)
     output = re.sub("{{ repos }}", f"{len(await s.repos):,}", output)
+    
+    output = re.sub("{{ pr_contributions }}", f"{len(await s.repos):,}", output)
 
     generate_output_folder()
     with open("generated/overview.svg", "w") as f:
@@ -129,7 +133,13 @@ async def main() -> None:
             exclude_langs=excluded_langs,
             ignore_forked_repos=ignore_forked_repos,
         )
-        await asyncio.gather(generate_languages(s), generate_overview(s))
+        
+        prStats = PRStats(
+            user,
+            access_token,
+            session
+        )
+        await asyncio.gather(generate_languages(s), generate_overview(s, prStats))
 
 
 if __name__ == "__main__":
