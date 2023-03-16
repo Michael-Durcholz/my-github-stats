@@ -77,6 +77,8 @@ class PRStats(object):
         headers = {'Authorization': 'token %s' % api_token}
         r = requests.post(url=url, json=json, headers=headers)
         
+        print(f"query: {query}")
+        
         print(f"json_data {r.json()}")
         json_data = r.json()['data']['user']['contributionsCollection']['pullRequestReviewContributionsByRepository']
         reviews = sum([i['contributions']['totalCount'] for i in json_data if i['repository']['nameWithOwner'].startswith("${{env.repoOwnerConstraint}}")])
