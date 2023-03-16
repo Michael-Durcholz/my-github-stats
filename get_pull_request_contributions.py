@@ -73,7 +73,7 @@ class PRStats(object):
         """
         )
         json = { 'query' : query}
-        api_token = "${{ secrets.ACCESS_TOKEN }}"
+        api_token = f"{self.access_token}"
         headers = {'Authorization': 'token %s' % api_token}
         r = requests.post(url=url, json=json, headers=headers)
         
