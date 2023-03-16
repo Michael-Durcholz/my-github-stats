@@ -79,7 +79,7 @@ class PRStats(object):
         
         #print(f"query: {query}")
         
-        print(f"json_data {r.json()}")
+        #print(f"json_data {r.json()}")
         json_data = r.json()['data']['user']['contributionsCollection']['pullRequestReviewContributionsByRepository']
         if self.repo_owner is None:
             self._prContributions = sum([i['contributions']['totalCount'] for i in json_data])
