@@ -3,7 +3,7 @@
 import asyncio
 import os
 from typing import Dict, List, Optional, Set, Tuple, Any, cast
-import datetime
+from datetime import datetime, timedelta
 
 import aiohttp
 import requests
@@ -16,8 +16,8 @@ class PRStats(object):
         access_token: str,
         session: aiohttp.ClientSession,
         repo_owner: str = None,
-        startDateTime: datetime = datetime.datetime.min,
-        endDateTime: datetime = datetime.datetime.max,
+        startDateTime: datetime = datetime.datetime.now() - timedelta(days = 365),
+        endDateTime: datetime = datetime.datetime.now(),
     ):
         self.username = username
         self.access_token = access_token
